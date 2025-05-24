@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+         <record id="email_template_offfer" model="mail.template">
+            <field name="name">Property Confirmation</field>
+            <field name="model_id" ref="my_module.model_estate_property"/>
+            <field name="subject">New information on  ${object.name} Confirmation</field>
+            <field name="email_from">sheeja836@vidyaacademy.ac.in</field>
+             <!--<field name="email_to">sheejapssunny@gmail.com</field>-->
+            <field name="email_to">{{object._get_emails()}}</field>
+             <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <p>
+                    Dear ,
+                    <br/>
+                    This Property is now sold
+                    <br/>
+                    <br/>
+                    The OdooGuys
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

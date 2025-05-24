@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="module_category_real_estate" model="ir.module.category">
+            <field name="name">Real Estate</field>
+            <field name="description">Access rights for the Real Estate module</field>
+            <field name="sequence">1000</field>
+        </record>
+
+
+        <!-- Group for Managers -->
+        <record id="group_real_estate_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="my_module.module_category_real_estate"/>
+        </record>
+
+        <!-- Group for Regular Users -->
+        <record id="group_real_estate_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="my_module.module_category_real_estate"/>
+        </record>
+
+    </data>
+</odoo>

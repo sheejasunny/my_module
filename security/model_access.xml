@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data >
+
+        <record id="my_module.access_estate_property_2" model="ir.model.access">
+            <field name="group_id" ref="my_module.group_real_estate_manager"/>
+
+        </record>
+        <record id="my_module.access_estate_property_3" model="ir.model.access">
+            <field name="group_id" ref="my_module.group_real_estate_manager"/>
+
+        </record>
+        <record id="access_estate_property_2_user" model="ir.model.access">
+            <field name="name" >Property tag access for user </field>
+            <field name="model_id" ref="my_module.model_estate_property_tag"/>
+            <field name="group_id" ref="my_module.group_real_estate_user"/>
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+
+        </record>
+
+    </data>
+</odoo>

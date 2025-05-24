@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <!-- Parent menu -->
+        <menuitem name="Property Ads" id="menu_root_property_ads"/>
+
+        <!-- Child menus -->
+        <menuitem id="menu_property_ads" name="Ads" parent="menu_root_property_ads"/>
+        <menuitem id="menu_property" name="Property" action="action_property" parent="menu_property_ads"/>
+
+        <!-- Settings menu and submenus -->
+        <menuitem id="menu_property_ads_settings" parent="menu_root_property_ads" name="Settings">
+            <menuitem id="menu_property_type" name="Property Types" action="action_property_type" /><!-- groups="my_module.group_real_estate_manager" -->
+            <menuitem id="menu_property_tag" name="Property Tags" action="action_property_tag"/>
+            <menuitem id="menu_property_client_action" name="Property Client Action" action="action_hello_client"/>
+            <!--<menuitem id="menu_property_offer" name="Property Offers" action="action_property_offer"/>-->
+        </menuitem>
+</odoo>

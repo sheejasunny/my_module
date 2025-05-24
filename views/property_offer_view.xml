@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="estate_property_offer_view" model="ir.ui.view">
+            <field name="name">estate.property.offer.tree</field>
+            <field name="model">estate.property.offer</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+
+                </tree>
+            </field>
+        </record>
+        <record id="estate_property_offer_form_view" model="ir.ui.view">
+            <field name="name">estate.property.offer.form</field>
+            <field name="model">estate.property.offer</field>
+            <field name="arch" type="xml">
+                <form>
+                 <header>
+                    <button name="action_accept" type="object" string="Accept"  states="draft" class="btn-primary"/>
+                    <button name="action_refuse" type="object" string="Refuse"  states="draft" class="btn-danger"/>
+                    <field name="status" widget="statusbar" statusbar_visible="accepted,refused"/>
+                </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <group>
+                                    <field name="price"/>
+                                    <field name="status"/>
+                                    <field name="partner_id"/>
+                                    <field name="property_id"/>
+                                </group>
+                                <group>
+                                    <field name="create_date"/>
+                                    <field name="validity"/>
+                                    <field name="deadline" widget="remaining_days"/>
+                                    <field name="partner_email"/>
+                                </group>
+                            </group>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_property_offer" model="ir.actions.act_window">
+            <field name="name">Property Offers</field>
+            <field name="res_model">estate.property.offer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="estate_property_offer_view"/>
+        </record>
+    </data>
+</odoo>

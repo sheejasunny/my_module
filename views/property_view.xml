@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="estate_property_tree_view" model="ir.ui.view">
+            <field name="name">estate.property.tree</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="state == 'cancel'"
+                      decoration-warning="state == 'sold'"
+                      decoration-success="state == 'accepted'">
+                    <field name="postcode"/>
+                    <field name="date_availability"/>
+                    <field name="expected_price"/>
+                    <field name="best_offer"/>
+                    <field name="selling_price"/>
+                    <field name="state" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="estate_property_search_view" model="ir.ui.view">
+            <field name="name">estate.property.search</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="postcode"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="total_area"/>
+                     <group string="State">
+                         <!-- Filters -->
+                        <filter name="for_sale" string="For Sale" domain="[('state','=','new')]"/>
+                        <filter name="sold" string="Sold" domain="[('state','=','sold')]"/>
+                     </group>
+                     <!-- Group By options -->
+                    <group expand="1" string="Group By">
+                        <filter string="Status" name="group_by_state" context="{'group_by':'state'}"/>
+                    </group>
+                     <!-- Optional Search Panel -->
+                    <searchpanel>
+                        <field name="state" icon="fa-filter" limit="0"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="estate_property_form_view" model="ir.ui.view">
+            <field name="name">estate.property.form</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_sold" type="object" string="SOLD" class="btn btn-primary"/>
+                        <button name="action_cancel" type="object" string="CANCEL" class="btn btn-danger"/>
+                        <field name="state" widget="statusbar"/>
+
+                    </header>
+
+                    <sheet>
+                         <div class="oe_button_box" name="button_box">
+
+                        <button name="action_url_action" type="object" string="Visit Website" icon="fa-handshake-o"/>
+                         <button name="action_send_email" type="object" string="Send Email" class="btn btn-success"/>
+                     </div>
+                        <!--<div class="oe_button_box" name="button_box">
+                          <field name="is_published" widget="website_publish_button" options="{'website_button': True}" />
+                        </div>-->
+                        <group>
+                            <field name="name" widget="char_emojis" placeholder="Property Name"/>
+                             <field name="tag_ids" widget="many2many_tags" options="{'color_field':'color'}"/>
+                            <group>
+                                <field name="type_ids"/>
+                                <field name="postcode" password="True"/>
+                                <field name="date_availability"/>
+                            </group>
+                            <group>
+                                <field name="expected_price"/>
+                                <field name="best_offer"/>
+                                <field name="selling_price"/>
+                            </group>
+                        </group>
+                        <notebook>
+                                <page string="Description">
+                                    <group>
+                                        <field name="description"/>
+                                        <field name="bed_rooms"/>
+                                        <field name="living_area"/>
+                                        <field name="facades"/>
+                                        <field name="garage"/>
+                                        <field name="garden" widget="boolean_toggle"/>
+                                        <field name="garden_area" attrs="{'invisible':[('garden','=',False)]}"/>
+                                        <field name="garden_orientation" attrs="{'invisible':[('garden','=',False)]}" widget="radio"/>
+                                        <field name="sales_id" />
+                                        <field name="total_area" />
+                                    </group>
+                                </page>
+                                <page string="Offers">
+                                    <field name="offer_ids" >
+                                        <tree>
+                                            <field name="price" />
+                                            <field name="partner_id" />
+                                            <field name="create_date" />
+                                            <field name="validity" />
+                                            <field name="deadline" />
+                                            <field name="status" />
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page string="Other-Info">
+                                    <group>
+                                        <field name="sales_id" />
+                                        <field name="buyer_id" />
+                                        <field name="phone" widget="phone"/>
+                                    </group>
+                                </page>
+                        </notebook>
+                    </sheet>
+                      <!--<div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                      </div>-->
+                </form>
+            </field>
+        </record>
+        <!-- pivot view -->
+
+        <record id="estate_property_pivot_view" model="ir.ui.view">
+            <field name="name">estate.property.pivot</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <pivot string="Property Analysis">
+                    <field name="name" type="row"/>
+                    <field name="selling_price" type="measure"/>
+                    <field name="expected_price" type="measure"/>
+               </pivot>
+            </field>
+        </record>
+
+        <!-- graph view -->
+
+        <record id="estate_property_graph_view" model="ir.ui.view">
+            <field name="name">estate.property.graph</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <graph string="Property Analysis">
+                    <field name="name" type="row"/>
+                    <field name="selling_price" type="measure"/>
+               </graph>
+            </field>
+        </record>
+
+        <!-- calendar view -->
+
+        <record id="estate_property_calendar_view" model="ir.ui.view">
+            <field name="name">estate.property.calendar</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <calendar string="Property Availability Calendar" date_start="date_availability" mode="month">
+                    <field name="name"/>
+                    <field name="date_availability"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="action_property" model="ir.actions.act_window">
+            <field name="name">Property</field>
+            <field name="res_model">estate.property</field>
+            <field name="view_mode">tree,form,pivot,graph,calendar</field>
+            <field name="view_id" ref="estate_property_tree_view"/>
+            <field name="search_view_id" ref="estate_property_search_view"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                        Create a Property to Advertise
+                </p>
+            </field>
+        <!--client action-->
+        </record>
+        <record id="action_hello_client" model="ir.actions.client">
+            <field name="tag">hello_client_action</field>
+        </record>
+        <!--server  action-->
+           <record id="action_server_extend_offer_deadline" model="ir.actions.server">
+                <field name="name">Extend Deadline</field>
+                <field name="model_id" ref="my_module.model_estate_property"/>
+                <field name="state">code</field>
+                <field name="binding_model_id" ref="my_module.model_estate_property"/>
+                <field name="binding_view_types">list,form</field>
+                <field name="code">
+                    records.extend_best_offer()
+                </field>
+           </record>
+        <!-- Scheduled Actions means automatic tasks -->
+        <record id="ir_cron_extend_offer_deadline" model="ir.cron">
+            <field name="name">offers:Extend offers everyday</field>
+            <field name="model_id" ref="my_module.model_estate_property"/>
+            <field name="state">code</field>
+            <field name="code">model.extend_scheduled_task_offer()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+
+
+    </data>
+</odoo>
